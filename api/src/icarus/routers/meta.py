@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends
 from neo4j import AsyncSession
 
 from icarus.dependencies import get_session
+from icarus.services.neo4j_service import execute_query_single
 
 router = APIRouter(prefix="/api/v1/meta", tags=["meta"])
 
@@ -12,8 +13,7 @@ router = APIRouter(prefix="/api/v1/meta", tags=["meta"])
 async def neo4j_health(
     session: Annotated[AsyncSession, Depends(get_session)],
 ) -> dict[str, str]:
-    result = await session.run("RETURN 1 AS ok")
-    record = await result.single()
+    record = await execute_query_single(session, "health_check", {})
     if record and record["ok"] == 1:
         return {"neo4j": "connected"}
     return {"neo4j": "error"}

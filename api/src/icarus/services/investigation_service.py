@@ -53,7 +53,9 @@ async def create_investigation(
         "investigation_create",
         {"id": str(uuid.uuid4()), "title": title, "description": description or ""},
     )
-    assert record is not None
+    if record is None:
+        msg = "Failed to create investigation"
+        raise RuntimeError(msg)
     return _record_to_investigation(record)
 
 
@@ -148,7 +150,9 @@ async def create_annotation(
             "text": text,
         },
     )
-    assert record is not None
+    if record is None:
+        msg = "Failed to create annotation"
+        raise RuntimeError(msg)
     return _record_to_annotation(record)
 
 
@@ -180,7 +184,9 @@ async def create_tag(
             "color": color,
         },
     )
-    assert record is not None
+    if record is None:
+        msg = "Failed to create tag"
+        raise RuntimeError(msg)
     return _record_to_tag(record)
 
 

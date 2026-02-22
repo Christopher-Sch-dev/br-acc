@@ -1,14 +1,14 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class InvestigationCreate(BaseModel):
-    title: str
-    description: str | None = None
+    title: str = Field(max_length=200)
+    description: str | None = Field(default=None, max_length=2000)
 
 
 class InvestigationUpdate(BaseModel):
-    title: str | None = None
-    description: str | None = None
+    title: str | None = Field(default=None, max_length=200)
+    description: str | None = Field(default=None, max_length=2000)
 
 
 class InvestigationResponse(BaseModel):
@@ -36,7 +36,7 @@ class Annotation(BaseModel):
 
 class AnnotationCreate(BaseModel):
     entity_id: str
-    text: str
+    text: str = Field(max_length=5000)
 
 
 class Tag(BaseModel):
@@ -47,5 +47,5 @@ class Tag(BaseModel):
 
 
 class TagCreate(BaseModel):
-    name: str
-    color: str = "#E07A2F"
+    name: str = Field(max_length=50)
+    color: str = Field(default="#E07A2F", max_length=7)

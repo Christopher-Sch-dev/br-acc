@@ -4,6 +4,7 @@ from typing import Annotated, Any
 from fastapi import APIRouter, Depends, HTTPException, Query
 from neo4j import AsyncSession
 
+from icarus.constants import PEP_ROLES
 from icarus.dependencies import get_session
 from icarus.models.entity import (
     ConnectionResponse,
@@ -17,8 +18,6 @@ router = APIRouter(prefix="/api/v1/entity", tags=["entity"])
 
 CPF_PATTERN = re.compile(r"^\d{11}$")
 CNPJ_PATTERN = re.compile(r"^\d{14}$")
-
-PEP_ROLES = {"deputado", "senador", "vereador", "prefeito", "governador", "presidente", "ministro"}
 
 
 def _clean_identifier(raw: str) -> str:

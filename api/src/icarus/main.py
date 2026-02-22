@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(
     title="ICARUS API",
-    description="Brazilian public data anti-corruption graph tool",
+    description="Brazilian public data graph analysis tool",
     version="0.1.0",
     lifespan=lifespan,
 )

@@ -13,16 +13,18 @@ NEO4J_PASSWORD="${NEO4J_PASSWORD:?NEO4J_PASSWORD must be set}"
 
 echo "Seeding Neo4j at ${NEO4J_URI}..."
 
+export NEO4J_PASSWORD
+
 if command -v cypher-shell &>/dev/null; then
   cypher-shell \
     -a "${NEO4J_URI}" \
     -u "${NEO4J_USER}" \
-    -p "${NEO4J_PASSWORD}" \
+    --env NEO4J_PASSWORD \
     -f "${CYPHER_FILE}"
 elif command -v docker &>/dev/null; then
-  docker exec -i icarus-neo4j cypher-shell \
+  docker exec -i -e NEO4J_PASSWORD="${NEO4J_PASSWORD}" icarus-neo4j cypher-shell \
     -u "${NEO4J_USER}" \
-    -p "${NEO4J_PASSWORD}" \
+    --env NEO4J_PASSWORD \
     < "${CYPHER_FILE}"
 else
   echo "Error: cypher-shell not found and docker not available."

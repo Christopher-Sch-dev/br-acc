@@ -56,7 +56,7 @@ async def get_investigation(
     return result
 
 
-@router.put(
+@router.patch(
     "/api/v1/investigations/{investigation_id}",
     response_model=InvestigationResponse,
 )

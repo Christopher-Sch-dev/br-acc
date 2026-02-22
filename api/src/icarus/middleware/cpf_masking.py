@@ -13,6 +13,8 @@ from typing import TYPE_CHECKING, Any
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response, StreamingResponse
 
+from icarus.constants import PEP_ROLES
+
 if TYPE_CHECKING:
     from starlette.middleware.base import RequestResponseEndpoint
     from starlette.requests import Request
@@ -22,23 +24,6 @@ if TYPE_CHECKING:
 # (e.g. 14-digit CNPJ).
 _CPF_FORMATTED = re.compile(r"\d{3}\.\d{3}\.\d{3}-\d{2}")
 _CPF_RAW = re.compile(r"(?<!\d)\d{11}(?!\d)")
-
-_PEP_ROLES = frozenset({
-    "deputado",
-    "deputada",
-    "senador",
-    "senadora",
-    "vereador",
-    "vereadora",
-    "prefeito",
-    "prefeita",
-    "governador",
-    "governadora",
-    "presidente",
-    "presidenta",
-    "ministro",
-    "ministra",
-})
 
 
 def _mask_formatted_cpf(cpf: str) -> str:
@@ -68,7 +53,7 @@ def _is_pep_record(record: dict[str, Any]) -> bool:
 
     for field in ("role", "cargo"):
         value = record.get(field)
-        if isinstance(value, str) and value.strip().lower() in _PEP_ROLES:
+        if isinstance(value, str) and value.strip().lower() in PEP_ROLES:
             return True
 
     return False

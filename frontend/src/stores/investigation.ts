@@ -41,7 +41,7 @@ export const useInvestigationStore = create<InvestigationState>((set, get) => ({
       const res = await api.listInvestigations();
       set({ investigations: res.investigations, loading: false });
     } catch {
-      set({ error: "Failed to load investigations", loading: false });
+      set({ error: "investigation.loadError", loading: false });
     }
   },
 

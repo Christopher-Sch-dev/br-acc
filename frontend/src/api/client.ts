@@ -37,7 +37,7 @@ export interface SearchResult {
 }
 
 export interface SearchResponse {
-  items: SearchResult[];
+  results: SearchResult[];
   total: number;
   page: number;
   size: number;
@@ -216,8 +216,8 @@ export function addEntityToInvestigation(
   entityId: string,
 ): Promise<void> {
   return apiFetch<void>(
-    `/api/v1/investigations/${encodeURIComponent(investigationId)}/entities`,
-    { method: "POST", body: JSON.stringify({ entity_id: entityId }) },
+    `/api/v1/investigations/${encodeURIComponent(investigationId)}/entities/${encodeURIComponent(entityId)}`,
+    { method: "POST" },
   );
 }
 

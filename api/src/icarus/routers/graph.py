@@ -3,14 +3,13 @@ from typing import Annotated, Any
 from fastapi import APIRouter, Depends, HTTPException, Query
 from neo4j import AsyncSession
 
+from icarus.constants import PEP_ROLES
 from icarus.dependencies import get_session
 from icarus.models.entity import SourceAttribution
 from icarus.models.graph import GraphEdge, GraphNode, GraphResponse
 from icarus.services.neo4j_service import execute_query
 
 router = APIRouter(prefix="/api/v1/graph", tags=["graph"])
-
-PEP_ROLES = {"deputado", "senador", "vereador", "prefeito", "governador", "presidente", "ministro"}
 
 
 def _is_pep(properties: dict[str, Any]) -> bool:
@@ -41,6 +40,7 @@ async def get_graph(
         {
             "entity_id": entity_id,
             "entity_types": type_list,
+            "depth": depth,
         },
     )
 

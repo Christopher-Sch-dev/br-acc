@@ -17,7 +17,7 @@ export function Search() {
     setError(null);
     try {
       const response = await searchEntities(params.query, params.type);
-      setResults(response.items);
+      setResults(response.results);
       setHasSearched(true);
     } catch {
       setError(t("search.error"));
