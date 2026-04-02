@@ -190,7 +190,7 @@ def _resolve_rf_release_inline(year_month: str | None = None) -> str:
     if year_month is not None:
         candidates = [year_month]
     else:
-        candidates: list[str] = []
+        candidates = []
         cursor = now.replace(day=1)
         for _ in range(12):
             candidates.append(f"{cursor.year:04d}-{cursor.month:02d}")
